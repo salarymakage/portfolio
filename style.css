@@ -977,3 +977,113 @@ img {
   color: var(--first-color); /* Change color on hover */
 }
 
+/* For screens up to 768px */
+@media screen and (max-width: 768px) {
+  .nav__logo-name {
+    font-size: 1rem; /* Smaller logo text */
+  }
+
+  .nav__menu {
+    padding-block: 1rem 4rem; /* Reduce padding for smaller screens */
+  }
+
+  .nav__list {
+    flex-direction: column;
+    row-gap: 1.5rem; /* Less gap between links */
+  }
+
+  .nav__toggle {
+    font-size: 1rem;
+  }
+}
+
+/* For screens up to 480px (phones) */
+@media screen and (max-width: 480px) {
+  .nav__list {
+    row-gap: 1rem;
+  }
+
+  .nav__menu {
+    padding-block: 0.8rem 3rem;
+  }
+
+  .nav__title, .nav__name {
+    font-size: var(--h3-font-size);
+  }
+
+  .nav__link {
+    font-size: var(--normal-font-size);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .about__content {
+    flex-direction: column; /* Stack the image and text vertically */
+    align-items: center; /* Center content */
+    gap: 1.5rem; /* Reduce gap */
+  }
+
+  .about__image {
+    max-width: 50%; /* Make image smaller on smaller screens */
+  }
+
+  .about__text {
+    text-align: center; /* Center text on smaller screens */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .about__image {
+    max-width: 80%; /* Further reduce image size on phones */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .projects-section {
+    width: 90%; /* Increase width for smaller screens */
+  }
+
+  .project-info h2 {
+    font-size: 2rem; /* Reduce heading size */
+  }
+
+  .project-info h3 {
+    font-size: 1.5rem; /* Reduce sub-heading size */
+  }
+
+  .project-navigation button {
+    font-size: 1.5rem; /* Smaller buttons on smaller screens */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .footer {
+    padding: 3rem 0; /* Reduce padding for smaller screens */
+  }
+
+  .footer .container {
+    gap: 2rem; /* Reduce space between footer sections */
+  }
+
+  .social-links {
+    margin-bottom: 1.5rem; /* Reduce margin */
+  }
+
+  .social-links a {
+    font-size: 1.5rem; /* Reduce icon size */
+  }
+
+  .footer-blog {
+    text-align: center; /* Center blog links */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .social-links a {
+    font-size: 1.25rem; /* Even smaller icons on phones */
+  }
+
+  .footer-about {
+    font-size: var(--normal-font-size); /* Reduce text size */
+  }
+}
