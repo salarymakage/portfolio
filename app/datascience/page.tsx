@@ -6,27 +6,29 @@ import { useEffect, useRef } from 'react';
 
 // Animated Background Component inspired by the CodePen
 const AnimatedBackground = () => {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    const canvasElement = canvasRef.current;
+    if (!canvasElement) return;
     
-    const ctx = canvas.getContext('2d');
-    const particles = [];
-    const particleCount = 100;
+    const context = canvasElement.getContext('2d');
+    if (!context) return;
     
-    // Set canvas to full width/height
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
+    // Create non-null versions of these variables to use inside the class
+    // This tells TypeScript they're guaranteed to be non-null
+    const canvas: HTMLCanvasElement = canvasElement;
+    const ctx: CanvasRenderingContext2D = context;
     
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    
-    // Particle class
+    // Define Particle class with canvas and ctx in closure
     class Particle {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      radius: number;
+      color: string;
+      
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
@@ -54,6 +56,18 @@ const AnimatedBackground = () => {
         this.draw();
       }
     }
+    
+    const particles: Particle[] = [];
+    const particleCount = 100;
+    
+    // Set canvas to full width/height
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
     
     // Create particles
     for (let i = 0; i < particleCount; i++) {
@@ -104,15 +118,29 @@ const AnimatedBackground = () => {
   );
 };
 
-// Updated SkillCard component for the new format
-const SkillCard = ({ title, skills }) => (
+// Define props interface for SkillCard
+interface SkillCardProps {
+  title: string;
+  skills: string;
+}
+
+// Updated SkillCard component with proper props typing
+const SkillCard = ({ title, skills }: SkillCardProps) => (
   <div className="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-md">
     <h3 className="font-bold text-lg text-blue-600 dark:text-blue-400 mb-3">• {title}:</h3>
     <p className="text-gray-700 dark:text-gray-300">{skills}</p>
   </div>
 );
 
-const SocialLink = ({ href, icon, label }) => (
+// Define props interface for SocialLink
+interface SocialLinkProps {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+}
+
+// SocialLink component with proper props typing
+const SocialLink = ({ href, icon, label }: SocialLinkProps) => (
   <a 
     href={href} 
     target="_blank" 
@@ -123,6 +151,7 @@ const SocialLink = ({ href, icon, label }) => (
     {icon}
   </a>
 );
+
 
 export default function DataSciencePage() {
   return (
@@ -135,185 +164,185 @@ export default function DataSciencePage() {
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mb-16">
           {/* Left side - Profile image with Neural Network background */}
           <div className="md:w-1/3 flex justify-center md:justify-end">
-  <div className="relative w-[400px] h-[400px] flex items-center justify-center">
-    {/* Neural Network Background - Enlarged */}
-    <div className="absolute inset-0 w-full h-full scale-125">
-      <svg className="w-full h-full" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
-        {/* Neural Network Nodes with movement animation */}
-        <circle cx="140" cy="140" r="8" fill="#3B82F6">
-          <animate attributeName="opacity" values="1;0.6;1" dur="3s" repeatCount="indefinite" />
-        </circle>
-        
-        <circle cx="90" cy="90" r="6" fill="#3B82F6" opacity="0.8">
-          <animate attributeName="cx" values="90;85;95;90" dur="7s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="90;95;85;90" dur="6s" repeatCount="indefinite" />
-        </circle>
-        
-        <circle cx="60" cy="140" r="6" fill="#3B82F6" opacity="0.8">
-          <animate attributeName="cx" values="60;55;65;60" dur="8s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="140;145;135;140" dur="6.5s" repeatCount="indefinite" />
-        </circle>
-        
-        <circle cx="90" cy="190" r="6" fill="#3B82F6" opacity="0.8">
-          <animate attributeName="cx" values="90;95;85;90" dur="7.5s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="190;185;195;190" dur="6.8s" repeatCount="indefinite" />
-        </circle>
-        
-        <circle cx="190" cy="90" r="6" fill="#3B82F6" opacity="0.8">
-          <animate attributeName="cx" values="190;195;185;190" dur="8.2s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="90;85;95;90" dur="7.2s" repeatCount="indefinite" />
-        </circle>
-        
-        <circle cx="220" cy="140" r="6" fill="#3B82F6" opacity="0.8">
-          <animate attributeName="cx" values="220;225;215;220" dur="7.8s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="140;145;135;140" dur="8.5s" repeatCount="indefinite" />
-        </circle>
-        
-        <circle cx="190" cy="190" r="6" fill="#3B82F6" opacity="0.8">
-          <animate attributeName="cx" values="190;185;195;190" dur="8.8s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="190;195;185;190" dur="7.5s" repeatCount="indefinite" />
-        </circle>
-        
-        <circle cx="110" cy="50" r="4" fill="#3B82F6" opacity="0.6">
-          <animate attributeName="cx" values="110;115;105;110" dur="9s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="50;55;45;50" dur="8s" repeatCount="indefinite" />
-        </circle>
-        
-        <circle cx="170" cy="50" r="4" fill="#3B82F6" opacity="0.6">
-          <animate attributeName="cx" values="170;165;175;170" dur="8.3s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="50;45;55;50" dur="7.3s" repeatCount="indefinite" />
-        </circle>
-        
-        <circle cx="40" cy="110" r="4" fill="#3B82F6" opacity="0.6">
-          <animate attributeName="cx" values="40;45;35;40" dur="7.6s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="110;105;115;110" dur="8.6s" repeatCount="indefinite" />
-        </circle>
-        
-        <circle cx="40" cy="170" r="4" fill="#3B82F6" opacity="0.6">
-          <animate attributeName="cx" values="40;35;45;40" dur="8.9s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="170;175;165;170" dur="7.9s" repeatCount="indefinite" />
-        </circle>
-        
-        <circle cx="110" cy="230" r="4" fill="#3B82F6" opacity="0.6">
-          <animate attributeName="cx" values="110;105;115;110" dur="9.2s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="230;235;225;230" dur="8.2s" repeatCount="indefinite" />
-        </circle>
-        
-        <circle cx="170" cy="230" r="4" fill="#3B82F6" opacity="0.6">
-          <animate attributeName="cx" values="170;175;165;170" dur="8.5s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="230;225;235;230" dur="9.5s" repeatCount="indefinite" />
-        </circle>
-        
-        <circle cx="240" cy="110" r="4" fill="#3B82F6" opacity="0.6">
-          <animate attributeName="cx" values="240;245;235;240" dur="7.2s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="110;115;105;110" dur="8.7s" repeatCount="indefinite" />
-        </circle>
-        
-        <circle cx="240" cy="170" r="4" fill="#3B82F6" opacity="0.6">
-          <animate attributeName="cx" values="240;235;245;240" dur="9.7s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="170;165;175;170" dur="8.1s" repeatCount="indefinite" />
-        </circle>
-        
-        {/* Neural Network Connections - these will update automatically with the nodes */}
-        <line stroke="#3B82F6" strokeWidth="1" opacity="0.5">
-          <animate attributeName="x1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
-          <animate attributeName="y1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
-          <animate attributeName="x2" values="90;85;95;90" dur="7s" repeatCount="indefinite" />
-          <animate attributeName="y2" values="90;95;85;90" dur="6s" repeatCount="indefinite" />
-        </line>
-        
-        <line stroke="#3B82F6" strokeWidth="1" opacity="0.5">
-          <animate attributeName="x1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
-          <animate attributeName="y1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
-          <animate attributeName="x2" values="60;55;65;60" dur="8s" repeatCount="indefinite" />
-          <animate attributeName="y2" values="140;145;135;140" dur="6.5s" repeatCount="indefinite" />
-        </line>
-        
-        <line stroke="#3B82F6" strokeWidth="1" opacity="0.5">
-          <animate attributeName="x1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
-          <animate attributeName="y1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
-          <animate attributeName="x2" values="90;95;85;90" dur="7.5s" repeatCount="indefinite" />
-          <animate attributeName="y2" values="190;185;195;190" dur="6.8s" repeatCount="indefinite" />
-        </line>
-        
-        <line stroke="#3B82F6" strokeWidth="1" opacity="0.5">
-          <animate attributeName="x1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
-          <animate attributeName="y1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
-          <animate attributeName="x2" values="190;195;185;190" dur="8.2s" repeatCount="indefinite" />
-          <animate attributeName="y2" values="90;85;95;90" dur="7.2s" repeatCount="indefinite" />
-        </line>
-        
-        <line stroke="#3B82F6" strokeWidth="1" opacity="0.5">
-          <animate attributeName="x1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
-          <animate attributeName="y1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
-          <animate attributeName="x2" values="220;225;215;220" dur="7.8s" repeatCount="indefinite" />
-          <animate attributeName="y2" values="140;145;135;140" dur="8.5s" repeatCount="indefinite" />
-        </line>
-        
-        <line stroke="#3B82F6" strokeWidth="1" opacity="0.5">
-          <animate attributeName="x1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
-          <animate attributeName="y1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
-          <animate attributeName="x2" values="190;185;195;190" dur="8.8s" repeatCount="indefinite" />
-          <animate attributeName="y2" values="190;195;185;190" dur="7.5s" repeatCount="indefinite" />
-        </line>
-        
-        <line stroke="#3B82F6" strokeWidth="1" opacity="0.4">
-          <animate attributeName="x1" values="90;85;95;90" dur="7s" repeatCount="indefinite" />
-          <animate attributeName="y1" values="90;95;85;90" dur="6s" repeatCount="indefinite" />
-          <animate attributeName="x2" values="110;115;105;110" dur="9s" repeatCount="indefinite" />
-          <animate attributeName="y2" values="50;55;45;50" dur="8s" repeatCount="indefinite" />
-        </line>
-        
-        <line stroke="#3B82F6" strokeWidth="1" opacity="0.4">
-          <animate attributeName="x1" values="90;85;95;90" dur="7s" repeatCount="indefinite" />
-          <animate attributeName="y1" values="90;95;85;90" dur="6s" repeatCount="indefinite" />
-          <animate attributeName="x2" values="40;45;35;40" dur="7.6s" repeatCount="indefinite" />
-          <animate attributeName="y2" values="110;105;115;110" dur="8.6s" repeatCount="indefinite" />
-        </line>
-        
-        {/* Outer connection lines (adding just a few key ones for performance) */}
-        <line stroke="#3B82F6" strokeWidth="1" opacity="0.3">
-          <animate attributeName="x1" values="110;115;105;110" dur="9s" repeatCount="indefinite" />
-          <animate attributeName="y1" values="50;55;45;50" dur="8s" repeatCount="indefinite" />
-          <animate attributeName="x2" values="170;165;175;170" dur="8.3s" repeatCount="indefinite" />
-          <animate attributeName="y2" values="50;45;55;50" dur="7.3s" repeatCount="indefinite" />
-        </line>
-        
-        <line stroke="#3B82F6" strokeWidth="1" opacity="0.3">
-          <animate attributeName="x1" values="40;45;35;40" dur="7.6s" repeatCount="indefinite" />
-          <animate attributeName="y1" values="110;105;115;110" dur="8.6s" repeatCount="indefinite" />
-          <animate attributeName="x2" values="40;35;45;40" dur="8.9s" repeatCount="indefinite" />
-          <animate attributeName="y2" values="170;175;165;170" dur="7.9s" repeatCount="indefinite" />
-        </line>
-        
-        {/* Additional connections for a denser network */}
-        <line stroke="#3B82F6" strokeWidth="1" opacity="0.3">
-          <animate attributeName="x1" values="190;195;185;190" dur="8.2s" repeatCount="indefinite" />
-          <animate attributeName="y1" values="90;85;95;90" dur="7.2s" repeatCount="indefinite" />
-          <animate attributeName="x2" values="240;245;235;240" dur="7.2s" repeatCount="indefinite" />
-          <animate attributeName="y2" values="110;115;105;110" dur="8.7s" repeatCount="indefinite" />
-        </line>
-        
-        <line stroke="#3B82F6" strokeWidth="1" opacity="0.3">
-          <animate attributeName="x1" values="190;185;195;190" dur="8.8s" repeatCount="indefinite" />
-          <animate attributeName="y1" values="190;195;185;190" dur="7.5s" repeatCount="indefinite" />
-          <animate attributeName="x2" values="170;175;165;170" dur="8.5s" repeatCount="indefinite" />
-          <animate attributeName="y2" values="230;225;235;230" dur="9.5s" repeatCount="indefinite" />
-        </line>
-        
-        {/* Animated Pulse Effect */}
-        <circle cx="140" cy="140" r="8" fill="transparent" stroke="#3B82F6" opacity="0.3">
-          <animate attributeName="r" from="10" to="90" dur="3s" repeatCount="indefinite" />
-          <animate attributeName="opacity" from="0.3" to="0" dur="3s" repeatCount="indefinite" />
-        </circle>
-      </svg>
-    </div>
+            <div className="relative w-[400px] h-[400px] flex items-center justify-center">
+              {/* Neural Network Background - Enlarged */}
+              <div className="absolute inset-0 w-full h-full scale-125">
+                <svg className="w-full h-full" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+                  {/* Neural Network Nodes with movement animation */}
+                  <circle cx="140" cy="140" r="8" fill="#3B82F6">
+                    <animate attributeName="opacity" values="1;0.6;1" dur="3s" repeatCount="indefinite" />
+                  </circle>
+                  
+                  <circle cx="90" cy="90" r="6" fill="#3B82F6" opacity="0.8">
+                    <animate attributeName="cx" values="90;85;95;90" dur="7s" repeatCount="indefinite" />
+                    <animate attributeName="cy" values="90;95;85;90" dur="6s" repeatCount="indefinite" />
+                  </circle>
+                  
+                  <circle cx="60" cy="140" r="6" fill="#3B82F6" opacity="0.8">
+                    <animate attributeName="cx" values="60;55;65;60" dur="8s" repeatCount="indefinite" />
+                    <animate attributeName="cy" values="140;145;135;140" dur="6.5s" repeatCount="indefinite" />
+                  </circle>
+                  
+                  <circle cx="90" cy="190" r="6" fill="#3B82F6" opacity="0.8">
+                    <animate attributeName="cx" values="90;95;85;90" dur="7.5s" repeatCount="indefinite" />
+                    <animate attributeName="cy" values="190;185;195;190" dur="6.8s" repeatCount="indefinite" />
+                  </circle>
+                  
+                  <circle cx="190" cy="90" r="6" fill="#3B82F6" opacity="0.8">
+                    <animate attributeName="cx" values="190;195;185;190" dur="8.2s" repeatCount="indefinite" />
+                    <animate attributeName="cy" values="90;85;95;90" dur="7.2s" repeatCount="indefinite" />
+                  </circle>
+                  
+                  <circle cx="220" cy="140" r="6" fill="#3B82F6" opacity="0.8">
+                    <animate attributeName="cx" values="220;225;215;220" dur="7.8s" repeatCount="indefinite" />
+                    <animate attributeName="cy" values="140;145;135;140" dur="8.5s" repeatCount="indefinite" />
+                  </circle>
+                  
+                  <circle cx="190" cy="190" r="6" fill="#3B82F6" opacity="0.8">
+                    <animate attributeName="cx" values="190;185;195;190" dur="8.8s" repeatCount="indefinite" />
+                    <animate attributeName="cy" values="190;195;185;190" dur="7.5s" repeatCount="indefinite" />
+                  </circle>
+                  
+                  <circle cx="110" cy="50" r="4" fill="#3B82F6" opacity="0.6">
+                    <animate attributeName="cx" values="110;115;105;110" dur="9s" repeatCount="indefinite" />
+                    <animate attributeName="cy" values="50;55;45;50" dur="8s" repeatCount="indefinite" />
+                  </circle>
+                  
+                  <circle cx="170" cy="50" r="4" fill="#3B82F6" opacity="0.6">
+                    <animate attributeName="cx" values="170;165;175;170" dur="8.3s" repeatCount="indefinite" />
+                    <animate attributeName="cy" values="50;45;55;50" dur="7.3s" repeatCount="indefinite" />
+                  </circle>
+                  
+                  <circle cx="40" cy="110" r="4" fill="#3B82F6" opacity="0.6">
+                    <animate attributeName="cx" values="40;45;35;40" dur="7.6s" repeatCount="indefinite" />
+                    <animate attributeName="cy" values="110;105;115;110" dur="8.6s" repeatCount="indefinite" />
+                  </circle>
+                  
+                  <circle cx="40" cy="170" r="4" fill="#3B82F6" opacity="0.6">
+                    <animate attributeName="cx" values="40;35;45;40" dur="8.9s" repeatCount="indefinite" />
+                    <animate attributeName="cy" values="170;175;165;170" dur="7.9s" repeatCount="indefinite" />
+                  </circle>
+                  
+                  <circle cx="110" cy="230" r="4" fill="#3B82F6" opacity="0.6">
+                    <animate attributeName="cx" values="110;105;115;110" dur="9.2s" repeatCount="indefinite" />
+                    <animate attributeName="cy" values="230;235;225;230" dur="8.2s" repeatCount="indefinite" />
+                  </circle>
+                  
+                  <circle cx="170" cy="230" r="4" fill="#3B82F6" opacity="0.6">
+                    <animate attributeName="cx" values="170;175;165;170" dur="8.5s" repeatCount="indefinite" />
+                    <animate attributeName="cy" values="230;225;235;230" dur="9.5s" repeatCount="indefinite" />
+                  </circle>
+                  
+                  <circle cx="240" cy="110" r="4" fill="#3B82F6" opacity="0.6">
+                    <animate attributeName="cx" values="240;245;235;240" dur="7.2s" repeatCount="indefinite" />
+                    <animate attributeName="cy" values="110;115;105;110" dur="8.7s" repeatCount="indefinite" />
+                  </circle>
+                  
+                  <circle cx="240" cy="170" r="4" fill="#3B82F6" opacity="0.6">
+                    <animate attributeName="cx" values="240;235;245;240" dur="9.7s" repeatCount="indefinite" />
+                    <animate attributeName="cy" values="170;165;175;170" dur="8.1s" repeatCount="indefinite" />
+                  </circle>
+                  
+                  {/* Neural Network Connections - these will update automatically with the nodes */}
+                  <line stroke="#3B82F6" strokeWidth="1" opacity="0.5">
+                    <animate attributeName="x1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
+                    <animate attributeName="y1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
+                    <animate attributeName="x2" values="90;85;95;90" dur="7s" repeatCount="indefinite" />
+                    <animate attributeName="y2" values="90;95;85;90" dur="6s" repeatCount="indefinite" />
+                  </line>
+                  
+                  <line stroke="#3B82F6" strokeWidth="1" opacity="0.5">
+                    <animate attributeName="x1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
+                    <animate attributeName="y1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
+                    <animate attributeName="x2" values="60;55;65;60" dur="8s" repeatCount="indefinite" />
+                    <animate attributeName="y2" values="140;145;135;140" dur="6.5s" repeatCount="indefinite" />
+                  </line>
+                  
+                  <line stroke="#3B82F6" strokeWidth="1" opacity="0.5">
+                    <animate attributeName="x1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
+                    <animate attributeName="y1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
+                    <animate attributeName="x2" values="90;95;85;90" dur="7.5s" repeatCount="indefinite" />
+                    <animate attributeName="y2" values="190;185;195;190" dur="6.8s" repeatCount="indefinite" />
+                  </line>
+                  
+                  <line stroke="#3B82F6" strokeWidth="1" opacity="0.5">
+                    <animate attributeName="x1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
+                    <animate attributeName="y1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
+                    <animate attributeName="x2" values="190;195;185;190" dur="8.2s" repeatCount="indefinite" />
+                    <animate attributeName="y2" values="90;85;95;90" dur="7.2s" repeatCount="indefinite" />
+                  </line>
+                  
+                  <line stroke="#3B82F6" strokeWidth="1" opacity="0.5">
+                    <animate attributeName="x1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
+                    <animate attributeName="y1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
+                    <animate attributeName="x2" values="220;225;215;220" dur="7.8s" repeatCount="indefinite" />
+                    <animate attributeName="y2" values="140;145;135;140" dur="8.5s" repeatCount="indefinite" />
+                  </line>
+                  
+                  <line stroke="#3B82F6" strokeWidth="1" opacity="0.5">
+                    <animate attributeName="x1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
+                    <animate attributeName="y1" values="140;140;140;140" dur="1s" repeatCount="indefinite" />
+                    <animate attributeName="x2" values="190;185;195;190" dur="8.8s" repeatCount="indefinite" />
+                    <animate attributeName="y2" values="190;195;185;190" dur="7.5s" repeatCount="indefinite" />
+                  </line>
+                  
+                  <line stroke="#3B82F6" strokeWidth="1" opacity="0.4">
+                    <animate attributeName="x1" values="90;85;95;90" dur="7s" repeatCount="indefinite" />
+                    <animate attributeName="y1" values="90;95;85;90" dur="6s" repeatCount="indefinite" />
+                    <animate attributeName="x2" values="110;115;105;110" dur="9s" repeatCount="indefinite" />
+                    <animate attributeName="y2" values="50;55;45;50" dur="8s" repeatCount="indefinite" />
+                  </line>
+                  
+                  <line stroke="#3B82F6" strokeWidth="1" opacity="0.4">
+                    <animate attributeName="x1" values="90;85;95;90" dur="7s" repeatCount="indefinite" />
+                    <animate attributeName="y1" values="90;95;85;90" dur="6s" repeatCount="indefinite" />
+                    <animate attributeName="x2" values="40;45;35;40" dur="7.6s" repeatCount="indefinite" />
+                    <animate attributeName="y2" values="110;105;115;110" dur="8.6s" repeatCount="indefinite" />
+                  </line>
+                  
+                  {/* Outer connection lines (adding just a few key ones for performance) */}
+                  <line stroke="#3B82F6" strokeWidth="1" opacity="0.3">
+                    <animate attributeName="x1" values="110;115;105;110" dur="9s" repeatCount="indefinite" />
+                    <animate attributeName="y1" values="50;55;45;50" dur="8s" repeatCount="indefinite" />
+                    <animate attributeName="x2" values="170;165;175;170" dur="8.3s" repeatCount="indefinite" />
+                    <animate attributeName="y2" values="50;45;55;50" dur="7.3s" repeatCount="indefinite" />
+                  </line>
+                  
+                  <line stroke="#3B82F6" strokeWidth="1" opacity="0.3">
+                    <animate attributeName="x1" values="40;45;35;40" dur="7.6s" repeatCount="indefinite" />
+                    <animate attributeName="y1" values="110;105;115;110" dur="8.6s" repeatCount="indefinite" />
+                    <animate attributeName="x2" values="40;35;45;40" dur="8.9s" repeatCount="indefinite" />
+                    <animate attributeName="y2" values="170;175;165;170" dur="7.9s" repeatCount="indefinite" />
+                  </line>
+                  
+                  {/* Additional connections for a denser network */}
+                  <line stroke="#3B82F6" strokeWidth="1" opacity="0.3">
+                    <animate attributeName="x1" values="190;195;185;190" dur="8.2s" repeatCount="indefinite" />
+                    <animate attributeName="y1" values="90;85;95;90" dur="7.2s" repeatCount="indefinite" />
+                    <animate attributeName="x2" values="240;245;235;240" dur="7.2s" repeatCount="indefinite" />
+                    <animate attributeName="y2" values="110;115;105;110" dur="8.7s" repeatCount="indefinite" />
+                  </line>
+                  
+                  <line stroke="#3B82F6" strokeWidth="1" opacity="0.3">
+                    <animate attributeName="x1" values="190;185;195;190" dur="8.8s" repeatCount="indefinite" />
+                    <animate attributeName="y1" values="190;195;185;190" dur="7.5s" repeatCount="indefinite" />
+                    <animate attributeName="x2" values="170;175;165;170" dur="8.5s" repeatCount="indefinite" />
+                    <animate attributeName="y2" values="230;225;235;230" dur="9.5s" repeatCount="indefinite" />
+                  </line>
+                  
+                  {/* Animated Pulse Effect */}
+                  <circle cx="140" cy="140" r="8" fill="transparent" stroke="#3B82F6" opacity="0.3">
+                    <animate attributeName="r" from="10" to="90" dur="3s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" from="0.3" to="0" dur="3s" repeatCount="indefinite" />
+                  </circle>
+                </svg>
+              </div>
     
     {/* Profile Image - Same Size */}
     <div className="relative z-10">
       <Image
-        src="/DS_profile.png"
-        alt="John Doe as a Data Scientist"
+        src="/profile.png"
+        alt="Data Scientist"
         width={230}
         height={230}
         className=""
@@ -377,14 +406,14 @@ export default function DataSciencePage() {
               </svg>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-2">Predictive Analytics Dashboard</h3>
+              <h3 className="text-xl font-bold mb-2">Face Recognition Project</h3>
               <p className="text-gray-600 dark:text-gray-300 mb-4">
-                Built an interactive dashboard for sales forecasting using time series analysis and machine learning models.
+              A real-time face recognition system that enhances security by replacing passwords with machine learning and deep learning-based facial authentication.
               </p>
               <div className="flex flex-wrap gap-2 mb-4">
                 <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full">Python</span>
-                <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full">Streamlit</span>
-                <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full">Prophet</span>
+                <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full">Django</span>
+                <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full">LBPH</span>
               </div>
               <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline">View Project →</a>
             </div>
@@ -397,14 +426,14 @@ export default function DataSciencePage() {
               </svg>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-2">Customer Segmentation Model</h3>
+              <h3 className="text-xl font-bold mb-2">Loan Recommendation System</h3>
               <p className="text-gray-600 dark:text-gray-300 mb-4">
-                Developed a clustering algorithm to identify customer segments for targeted marketing campaigns.
+              This project uses data to predict a user&apos;s loan eligibility and assess their risk level based on personal and historical financial information.
               </p>
               <div className="flex flex-wrap gap-2 mb-4">
+                <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full">Random Forest</span>
                 <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full">Python</span>
-                <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full">Scikit-learn</span>
-                <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full">Tableau</span>
+                <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full">Django</span>
               </div>
               <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline">View Project →</a>
             </div>

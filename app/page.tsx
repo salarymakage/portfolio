@@ -3,8 +3,6 @@
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-// import Image from "next/image";
-
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
@@ -33,7 +31,7 @@ export default function Home() {
     
     if (aboutSection) {
       // Calculate window height for proper positioning
-      const windowHeight = window.innerHeight;
+      // Using the window height - removed unused variable warning
       
       // Calculate position to scroll to - offset by some pixels to ensure the title is visible
       const offset = 100; // Adjust this value as needed
@@ -167,7 +165,7 @@ export default function Home() {
               <div className="w-full h-full rounded-full overflow-hidden relative border-4 border-white shadow-lg">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <Image
-                    src="/DS_profile.png"
+                    src="/profile.png"
                     alt="Tan Chesthareah"
                     width={200}
                     height={200}
@@ -246,7 +244,7 @@ export default function Home() {
               About <span className={`${activeSection === 'data-science' ? 'text-blue-600' : 'text-purple-600'}`}>Me</span>
             </h2>
             <p className="text-lg md:text-xl text-gray-600 mb-8">
-              I'm passionate about solving problems through data and design, blending analytical rigor with creative flair. With expertise in both data science and graphic design, I bring a unique perspective to every project I tackle.
+              I&apos;m passionate about solving problems through data and design, blending analytical rigor with creative flair. With expertise in both data science and graphic design, I bring a unique perspective to every project I tackle.
             </p>
             
             {/* Removed the toggle buttons that were here */}
@@ -369,40 +367,46 @@ export default function Home() {
               <>
                 {/* Data Science Project Cards */}
                 <div className="bg-white rounded-xl shadow-md overflow-hidden transform transition-all hover:shadow-lg hover:-translate-y-1">
-                  <div className="h-48 bg-blue-600 flex items-center justify-center">
-                    <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                    </svg>
+                  <div className="h-48 bg-blue-600 flex items-center justify-center relative">
+                    <Image 
+                      src="/projectimg/face_reg.png" 
+                      alt="Face Recognition Project" 
+                      fill
+                      className="object-cover"
+                    />
                   </div>
                   <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2">Predictive Analysis Model</h3>
+                    <h3 className="text-xl font-bold mb-2">Face Recognition Project</h3>
                     <p className="text-gray-600 mb-4">
-                      Developed a machine learning model to predict customer churn with 92% accuracy.
+                    A real-time face recognition system that enhances security by replacing passwords with machine learning and deep learning-based facial authentication.
                     </p>
                     <div className="flex flex-wrap gap-2 mb-4">
                       <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">Python</span>
-                      <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">TensorFlow</span>
-                      <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">Pandas</span>
+                      <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">Django</span>
+                      <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">LBPH</span>
                     </div>
                     <Link href="/datascience/project1" className="text-blue-600 font-medium hover:underline">View Project →</Link>
                   </div>
                 </div>
                 
                 <div className="bg-white rounded-xl shadow-md overflow-hidden transform transition-all hover:shadow-lg hover:-translate-y-1">
-                  <div className="h-48 bg-blue-500 flex items-center justify-center">
-                    <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
-                    </svg>
+                  <div className="h-48 bg-blue-500 flex items-center justify-center relative">
+                    <Image 
+                      src="/projectimg/loan.avif" 
+                      alt="Loan Recommendation System" 
+                      fill
+                      className="object-cover"
+                    />
                   </div>
                   <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2">Market Trend Visualization</h3>
+                    <h3 className="text-xl font-bold mb-2">Loan Recommendation System</h3>
                     <p className="text-gray-600 mb-4">
-                      Interactive dashboard showing market trends and consumer behavior patterns.
+                      This project uses data to predict a user&apos;s loan eligibility and assess their risk level based on personal and historical financial information.
                     </p>
                     <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">D3.js</span>
-                      <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">R</span>
-                      <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">Tableau</span>
+                      <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">Random Forest</span>
+                      <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">Python</span>
+                      <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">Django</span>
                     </div>
                     <Link href="/datascience/project2" className="text-blue-600 font-medium hover:underline">View Project →</Link>
                   </div>

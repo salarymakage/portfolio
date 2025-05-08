@@ -44,8 +44,8 @@ export default function AboutPage() {
                 Multi-disciplinary Professional with expertise in Data Science and Graphic Design
               </p>
               <p className="text-lg mb-6">
-                I'm John Doe, a passionate professional who combines analytical thinking with creative design. 
-                I've spent the last decade working at the intersection of data and design, 
+                I&apos;m John Doe, a passionate professional who combines analytical thinking with creative design. 
+                I&apos;ve spent the last decade working at the intersection of data and design, 
                 helping companies make data-driven decisions while creating visually compelling experiences.
               </p>
               <div className="flex gap-4">
@@ -103,11 +103,11 @@ export default function AboutPage() {
             <div className="relative pl-8">
               <div className="absolute -left-2 top-0 h-4 w-4 rounded-full bg-gray-600"></div>
               <h3 className="text-xl font-bold mb-2">Education</h3>
-              <p className="text-gray-500 mb-4">Master's in Data Science | University of Technology</p>
+              <p className="text-gray-500 mb-4">Master&apos;s in Data Science | University of Technology</p>
               <p className="text-gray-700 dark:text-gray-300 mb-2">
                 Specialized in machine learning and data visualization.
               </p>
-              <p className="text-gray-500 mb-4">Bachelor's in Graphic Design | Design Institute</p>
+              <p className="text-gray-500 mb-4">Bachelor&apos;s in Graphic Design | Design Institute</p>
               <p className="text-gray-700 dark:text-gray-300">
                 Focused on digital media and interactive design.
               </p>
@@ -251,9 +251,9 @@ export default function AboutPage() {
       {/* Contact CTA */}
       <section className="py-16 bg-gradient-to-r from-blue-500 to-purple-600 text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-4xl font-bold mb-4">Let's Work Together</h2>
+          <h2 className="text-2xl md:text-4xl font-bold mb-4">Let&apos;s Work Together</h2>
           <p className="text-lg mb-8 max-w-2xl mx-auto">
-            Whether you need data analysis, visualization, or design work, I'm ready to help bring your ideas to life.
+            Whether you need data analysis, visualization, or design work, I&apos;m ready to help bring your ideas to life.
           </p>
           <Link 
             href="/contact" 

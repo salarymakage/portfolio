@@ -7,12 +7,31 @@ import Link from 'next/link';
 // import ProfileBackgroundAnimation from '../components/ProfileBackgroundAnimation';
 import CircularToolsBackground from '../components/CircularToolsBackground';
 
+// Define interfaces for props
+interface LogoItem {
+  src: string;
+  alt: string;
+  shape: string;
+}
+
+interface SkillCardProps {
+  title: string;
+  skills: string;
+}
+
+interface SocialLinkProps {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+}
+
 // Auto-scrolling Logo Carousel Component with shaped logos and no scrollbar
 const LogoCarousel = () => {
-  const carouselRef = useRef(null);
+  // Specify HTMLDivElement as the type for the ref
+  const carouselRef = useRef<HTMLDivElement>(null);
   
   // Sample client logos with shape styles
-  const logos = [
+  const logos: LogoItem[] = [
     { src: "/logo1.png", alt: "Client 1", shape: "rounded-full" },
     { src: "/logo2.png", alt: "Client 2", shape: "rounded-lg" },
     { src: "/logo3.png", alt: "Client 3", shape: "rounded-xl" },
@@ -22,8 +41,12 @@ const LogoCarousel = () => {
   ];
   
   useEffect(() => {
-    const carousel = carouselRef.current;
-    if (!carousel) return;
+    // Get the actual HTML element
+    const carouselElement = carouselRef.current;
+    if (!carouselElement) return;
+    
+    // Create a non-null reference to use in the closure
+    const carousel = carouselElement as HTMLDivElement;
     
     // Calculate the width of a single set of logos
     const logoSetWidth = carousel.scrollWidth / 3;
@@ -34,7 +57,7 @@ const LogoCarousel = () => {
     // Slow, steady scroll speed
     const speed = 0.3; // Pixels per frame - lower value = slower scroll
     let scrollAmount = 0;
-    let animationId;
+    let animationId: number;
     
     const scroll = () => {
       scrollAmount += speed;
@@ -80,7 +103,7 @@ const LogoCarousel = () => {
   
   return (
     <div className="relative w-full my-8">
-      <h2 className="text-2xl md:text-3xl font-bold mb-8 text-purple-600 dark:text-purple-400 text-center">Poster Designs</h2>
+      <h2 className="text-2xl md:text-3xl font-bold mb-8 text-purple-600 dark:text-purple-400 text-center">Logo Designs</h2>
       
       <div className="relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-md py-4 overflow-hidden">
         <div className="absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-white to-transparent dark:from-gray-800 z-10"></div>
@@ -157,6 +180,7 @@ const LogoCarousel = () => {
   );
 };
 
+// Video section component
 const VideoSection = () => (
   <div className="mb-16">
     <h2 className="text-2xl md:text-3xl font-bold mb-8 text-purple-600 dark:text-purple-400 text-center">Video Projects</h2>
@@ -174,7 +198,7 @@ const VideoSection = () => (
         <div className="p-6">
           <h3 className="text-xl font-bold mb-2">Product Animation</h3>
           <p className="text-gray-600 dark:text-gray-300 mb-4">
-            3D animation showcasing a product's features and benefits with dynamic transitions and visual effects.
+            3D animation showcasing a product&apos;s features and benefits with dynamic transitions and visual effects.
           </p>
           <div className="flex flex-wrap gap-2 mb-4">
             <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 text-xs rounded-full">After Effects</span>
@@ -251,15 +275,16 @@ const PosterSection = () => (
   </div>
 );
 
-// Updated SkillCard component for the new format
-const SkillCard = ({ title, skills }) => (
+// Updated SkillCard component with proper TypeScript typing
+const SkillCard = ({ title, skills }: SkillCardProps) => (
   <div className="bg-white/90 dark:bg-gray-700/90 backdrop-blur-sm p-6 rounded-xl shadow-md">
     <h3 className="font-bold text-lg text-purple-600 dark:text-purple-400 mb-3">• {title}:</h3>
     <p className="text-gray-700 dark:text-gray-300">{skills}</p>
   </div>
 );
 
-const SocialLink = ({ href, icon, label }) => (
+// SocialLink component with proper TypeScript typing
+const SocialLink = ({ href, icon, label }: SocialLinkProps) => (
   <a 
     href={href} 
     target="_blank" 
@@ -295,8 +320,8 @@ export default function GraphicDesignPage() {
                   <div className="absolute inset-0 dark:bg-gray-800 rounded-full"></div>
                   
                   <Image
-                    src="/GD_profile.png"
-                    alt="John Doe as a Graphic Designer"
+                    src="/profile.png"
+                    alt="Graphic Designer"
                     width={250}
                     height={250}
                     className="relative "
@@ -312,7 +337,7 @@ export default function GraphicDesignPage() {
             <h1 className="text-3xl md:text-5xl font-bold mb-4 text-purple-600 dark:text-purple-400">Graphic Designer</h1>
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-6">Creating Visual Stories</p>
             <div className="max-w-3xl">
-              <p className="text-lg mb-6 dark:bg-gray-800/80 backdrop-blur-sm  rounded-lg">
+              <p className="text-lg mb-6 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg p-4">
                 I transform ideas into compelling visual narratives that captivate audiences and strengthen brand identities. With a keen eye for aesthetics and user experience, I create designs that not only look beautiful but also effectively communicate your message.
               </p>
               <div className="flex gap-4 mb-6">
@@ -351,9 +376,7 @@ export default function GraphicDesignPage() {
           </div>
         </div>
         
-        {/* <h2 className="text-2xl md:text-3xl font-bold mb-8 text-purple-600 dark:text-purple-400">Logo Designs</h2> */}
         {/* Logo Carousel */}
-        
         <LogoCarousel />
 
         {/* Poster Section */}

@@ -40,7 +40,8 @@ export default function ContactPage() {
         subject: '',
         message: ''
       });
-    } catch (err) {
+    } catch {
+      // No parameter needed since we're not using the error object
       setError('There was an error submitting your message. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -53,7 +54,7 @@ export default function ContactPage() {
         <div className="max-w-3xl mx-auto">
           <h1 className="text-3xl md:text-5xl font-bold mb-4 text-center">Contact Me</h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-10 text-center">
-            Let's discuss how I can help with your project
+            Let&apos;s discuss how I can help with your project
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
@@ -109,7 +110,7 @@ export default function ContactPage() {
                 </svg>
                 <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">
-                  Thank you for reaching out. I'll get back to you as soon as possible.
+                  Thank you for reaching out. I&apos;ll get back to you as soon as possible.
                 </p>
                 <button
                   onClick={() => setIsSubmitted(false)}

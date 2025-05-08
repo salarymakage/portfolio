@@ -2,29 +2,54 @@
 
 import { useEffect, useRef } from 'react';
 
+// Define types for circle objects
+interface Circle {
+  x: number;
+  y: number;
+  radius: number;
+  dx: number;
+  dy: number;
+  color: string;
+  opacity: number;
+}
+
 const ProfileBackgroundAnimation = () => {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  
+  // Removed the unused dimensions state
 
   useEffect(() => {
+    // Make sure we have both refs
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
 
+    // Get the drawing context
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    
+
     // Set canvas dimensions to match the container
     const updateCanvasSize = () => {
-      const container = canvas.parentElement;
-      canvas.width = container.offsetWidth;
-      canvas.height = container.offsetHeight;
+      if (container) {
+        const width = container.offsetWidth;
+        const height = container.offsetHeight;
+        
+        // No need to update state if we're not using it
+        canvas.width = width;
+        canvas.height = height;
+      }
     };
-    
+
+    // Initial size setup
     updateCanvasSize();
+    
+    // Handle window resize
     window.addEventListener('resize', updateCanvasSize);
 
     // Create circles with different properties
-    const circles = [];
-    const colors = ['#F9A8D4', '#C4B5FD', '#A78BFA', '#DDD6FE', '#E9D5FF'];
+    const colors: string[] = ['#F9A8D4', '#C4B5FD', '#A78BFA', '#DDD6FE', '#E9D5FF'];
+    const circles: Circle[] = [];
     
     // Create circles concentrated in the center
     for (let i = 0; i < 12; i++) {
@@ -49,13 +74,13 @@ const ProfileBackgroundAnimation = () => {
       });
     }
 
-    // Animation function
-    function animate() {
-      // Clear canvas
+    // Animation function - Move this inside the effect where canvas and ctx are guaranteed to exist
+    const animate = () => {
+      // Clear canvas - ctx and canvas are guaranteed to exist in this scope
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Draw and update each circle
-      circles.forEach(circle => {
+      circles.forEach((circle: Circle) => {
         // Move circle
         circle.x += circle.dx;
         circle.y += circle.dy;
@@ -80,12 +105,14 @@ const ProfileBackgroundAnimation = () => {
         // Draw a lighter inner circle
         ctx.beginPath();
         ctx.arc(circle.x, circle.y, circle.radius * 0.6, 0, Math.PI * 2);
-        ctx.fillStyle = `${circle.color}${Math.floor((circle.opacity + 0.1) * 255).toString(16).padStart(2, '0')}`;
+        const innerOpacity = Math.min(1, circle.opacity + 0.1);
+        const innerOpacityHex = Math.floor(innerOpacity * 255).toString(16).padStart(2, '0');
+        ctx.fillStyle = `${circle.color}${innerOpacityHex}`;
         ctx.fill();
       });
 
       requestAnimationFrame(animate);
-    }
+    };
 
     // Start the animation
     const animationId = requestAnimationFrame(animate);
@@ -98,11 +125,16 @@ const ProfileBackgroundAnimation = () => {
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 w-full h-full"
-      style={{ pointerEvents: 'none' }}
-    />
+    <div 
+      ref={containerRef} 
+      className="relative w-full h-full"
+    >
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full"
+        style={{ pointerEvents: 'none' }}
+      />
+    </div>
   );
 };
 
