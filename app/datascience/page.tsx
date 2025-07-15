@@ -337,20 +337,26 @@ export default function DataSciencePage() {
                   </circle>
                 </svg>
               </div>
-    
-    {/* Profile Image - Same Size */}
-    <div className="relative z-10">
-      <Image
-        src="/profile.png"
-        alt="Data Scientist"
-        width={230}
-        height={230}
-        className=""
-        priority
-      />
-    </div>
-  </div>
-</div>
+
+              {/* Profile Image - Circular with border and shadow */}
+              <div className="relative mx-auto mb-8 w-[230px] h-[230px]">
+                {/* Background glow */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-200 to-blue-400 dark:from-blue-900 dark:to-blue-700 rounded-full blur-md opacity-40 dark:opacity-20 scale-110 animate-pulse"></div>
+                <div className="w-full h-full rounded-full overflow-hidden relative border-4 border-white shadow-lg">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Image
+                      src="/profile.png"
+                      alt="Data Scientist"
+                      width={230}
+                      height={230}
+                      className="object-cover w-full h-full"
+                      priority
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           
           {/* Right side - Content */}
           <div className="md:w-2/3 text-center md:text-left">

@@ -315,18 +315,21 @@ export default function GraphicDesignPage() {
               
               {/* Profile Image - positioned in front of the circular tools */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative">
-                  {/* Optional white circle behind profile image for better contrast */}
-                  <div className="absolute inset-0 dark:bg-gray-800 rounded-full"></div>
-                  
-                  <Image
-                    src="/profile.png"
-                    alt="Graphic Designer"
-                    width={250}
-                    height={250}
-                    className="relative "
-                    priority
-                  />
+                <div className="relative w-[250px] h-[250px] mx-auto mb-8">
+                  {/* Background glow */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-200 to-purple-400 dark:from-purple-900 dark:to-purple-700 rounded-full blur-md opacity-40 dark:opacity-20 scale-110 animate-pulse"></div>
+                  <div className="w-full h-full rounded-full overflow-hidden relative border-4 border-white shadow-lg">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Image
+                        src="/profile.png"
+                        alt="Graphic Designer"
+                        width={250}
+                        height={250}
+                        className="object-cover w-full h-full"
+                        priority
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
