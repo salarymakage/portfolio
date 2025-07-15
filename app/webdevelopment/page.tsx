@@ -170,7 +170,7 @@ export default function WebDevelopmentPage() {
                   </text>
                   
                   <text x="80" y="110" fill="#22C55E" fontSize="10" opacity="0.6" fontFamily="monospace">
-                    &lt;div class="container"&gt;
+                    &lt;div class=&quot;container&quot;&gt;
                     <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3.5s" repeatCount="indefinite" />
                   </text>
                   
@@ -207,7 +207,7 @@ export default function WebDevelopmentPage() {
                   </text>
                   
                   <text x="40" y="200" fill="#22C55E" fontSize="7" opacity="0.4" fontFamily="monospace">
-                    console.log("Ready");
+                    console.log(&quot;Ready&quot;);
                     <animate attributeName="opacity" values="0.4;0.1;0.4" dur="5.8s" repeatCount="indefinite" />
                   </text>
                   

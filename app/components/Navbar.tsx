@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import ThemeToggle from './ThemeToggle';
 
 // Debounce function to optimize scroll performance
-function debounce<T extends (...args: any[]) => void>(func: T, wait: number): T {
+function debounce<T extends (...args: unknown[]) => void>(func: T, wait: number): T {
   let timeout: NodeJS.Timeout;
   return ((...args: Parameters<T>) => {
     clearTimeout(timeout);
