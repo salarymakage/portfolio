@@ -2,18 +2,82 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 245, 245, 245;
-  --background-end-rgb: 255, 255, 255;
+@layer base {
+  :root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
+    
+    /* Optimized color variables */
+    --bg-primary: 249, 250, 251;
+    --bg-secondary: 255, 255, 255;
+    --text-primary: 17, 24, 39;
+    --text-secondary: 107, 114, 128;
+    --border-color: 229, 231, 235;
+  }
+
+  .dark {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+    
+    /* Optimized dark mode colors */
+    --bg-primary: 17, 24, 39;
+    --bg-secondary: 31, 41, 55;
+    --text-primary: 243, 244, 246;
+    --text-secondary: 156, 163, 175;
+    --border-color: 55, 65, 81;
+  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 15, 23, 42;
-    --background-end-rgb: 30, 41, 59;
+/* Remove global transitions - apply them selectively */
+/* Custom scrollbar optimized */
+@layer utilities {
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
   }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-gray-400 dark:bg-gray-600 rounded;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500;
+  }
+}
+
+/* Optimized selection colors */
+::selection {
+  @apply bg-blue-500/20 text-blue-900 dark:bg-blue-400/20 dark:text-blue-100;
+}
+
+/* Focus styles with better accessibility */
+.focus-ring {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-900;
+}
+
+/* Smooth transitions only for interactive elements */
+.transition-theme {
+  @apply transition-colors duration-200 ease-in-out;
+}
+
+/* Optimized gradient backgrounds */
+.gradient-bg-light {
+  background: linear-gradient(135deg, rgb(99, 102, 241) 0%, rgb(139, 92, 246) 100%);
+}
+
+.gradient-bg-dark {
+  background: linear-gradient(135deg, rgb(79, 70, 229) 0%, rgb(124, 58, 237) 100%);
+}
+
+/* Prevent layout shift during theme transition */
+html {
+  color-scheme: light dark;
 }
 
 body {
@@ -21,6 +85,7 @@ body {
   background: linear-gradient(to bottom,
       transparent,
       rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  min-height: 100vh;
 }
 
 button, a {

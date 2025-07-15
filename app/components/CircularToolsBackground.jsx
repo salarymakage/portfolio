@@ -1,11 +1,15 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
+import { useTheme } from './ThemeProvider';
 
 const CircularToolsBackground = () => {
   const canvasRef = useRef(null);
+  const animationRef = useRef(null);
+  const { actualTheme } = useTheme();
 
-  useEffect(() => {
+  // Memoize draw function to prevent recreating on every render
+  const draw = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -29,42 +33,45 @@ const CircularToolsBackground = () => {
     // Set canvas dimensions to match the container
     const updateCanvasSize = () => {
       const container = canvas.parentElement;
-      canvas.width = container.offsetWidth;
-      canvas.height = container.offsetHeight;
+      if (!container) return;
+      
+      const dpr = window.devicePixelRatio || 1;
+      const rect = container.getBoundingClientRect();
+      
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
+      
+      ctx.scale(dpr, dpr);
     };
     
     updateCanvasSize();
-    window.addEventListener('resize', updateCanvasSize);
     
     // Calculate positions for the circular arrangement
-    const calculatePositions = () => {
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
-      const radius = Math.min(centerX, centerY) * 0.8; // 80% of the available space
+    const toolsWithPositions = designTools.map((tool, index) => {
+      const angle = (index / designTools.length) * Math.PI * 2;
       
-      // Calculate positions in a circle
-      return designTools.map((tool, index) => {
-        const angle = (index / designTools.length) * Math.PI * 2;
-        const x = centerX + radius * Math.cos(angle);
-        const y = centerY + radius * Math.sin(angle);
-        
-        return {
-          ...tool,
-          x,
-          y,
-          angle,
-          radius: 30, // Size of tool circle
-          startAngle: angle,
-        };
-      });
-    };
+      return {
+        ...tool,
+        startAngle: angle,
+        radius: 30, // Size of tool circle
+      };
+    });
     
-    let toolsWithPositions = calculatePositions();
     let rotationAngle = 0;
-    const rotationSpeed = 0.002; // Speed of rotation
+    const rotationSpeed = 0.0005; // Slower for better performance
+    
+    // Get text color based on theme
+    const textColor = actualTheme === 'dark' ? '#e5e7eb' : '#374151';
+    const bgOpacity = actualTheme === 'dark' ? '40' : '60';
     
     // Animation function
     function animate() {
+      const centerX = canvas.width / (2 * (window.devicePixelRatio || 1));
+      const centerY = canvas.height / (2 * (window.devicePixelRatio || 1));
+      const pathRadius = Math.min(centerX, centerY) * 0.8;
+      
       // Clear canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
@@ -72,53 +79,59 @@ const CircularToolsBackground = () => {
       rotationAngle += rotationSpeed;
       
       // Draw tools around the circle
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
-      const pathRadius = Math.min(centerX, centerY) * 0.8;
-      
       toolsWithPositions.forEach((tool) => {
         // Update position based on rotation
         const newAngle = tool.startAngle + rotationAngle;
         const x = centerX + pathRadius * Math.cos(newAngle);
         const y = centerY + pathRadius * Math.sin(newAngle);
         
-        // Draw tool circle
+        // Draw tool circle with lower opacity for performance
         ctx.beginPath();
         ctx.arc(x, y, tool.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `${tool.color}80`; // 50% opacity
+        ctx.fillStyle = `${tool.color}${bgOpacity}`;
         ctx.fill();
         
-        // Draw tool name
-        ctx.font = '12px Arial';
-        ctx.fillStyle = '#333';
+        // Draw tool name with theme-aware color
+        ctx.font = '12px Inter, -apple-system, BlinkMacSystemFont, sans-serif';
+        ctx.fillStyle = textColor;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(tool.name, x, y);
       });
       
-      requestAnimationFrame(animate);
+      animationRef.current = requestAnimationFrame(animate);
     }
 
-    // Handle window resize
-    window.addEventListener('resize', () => {
+    // Handle window resize efficiently
+    const resizeObserver = new ResizeObserver(() => {
       updateCanvasSize();
-      toolsWithPositions = calculatePositions();
     });
+    
+    if (canvas.parentElement) {
+      resizeObserver.observe(canvas.parentElement);
+    }
 
     // Start the animation
-    const animationId = requestAnimationFrame(animate);
+    animate();
     
     // Clean up
     return () => {
-      window.removeEventListener('resize', updateCanvasSize);
-      cancelAnimationFrame(animationId);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      resizeObserver.disconnect();
     };
-  }, []);
+  }, [actualTheme]);
+
+  useEffect(() => {
+    const cleanup = draw();
+    return cleanup;
+  }, [draw]);
 
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full"
+      className="absolute inset-0 w-full h-full opacity-60"
       style={{ pointerEvents: 'none' }}
     />
   );

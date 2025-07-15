@@ -130,18 +130,37 @@ export default function Home() {
   }, [scrollY, activeSection]);
 
   return (
-    <main className="relative">
-      {/* Hero overlay with gradient starting from white */}
+    <main className="relative bg-gray-50 dark:bg-black">
+      {/* Hero overlay with gradient - darker in dark mode */}
       <div 
         id="hero-overlay" 
         className="fixed top-0 left-0 w-full h-screen pointer-events-none transition-opacity duration-500"
-        style={{
-          background: activeSection === 'data-science' 
-            ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(197, 208, 230, 0.8) 100%)' 
-            : 'linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(176, 167, 196, 0.8) 100%)',
-          zIndex: 1
-        }}
-      ></div>
+      >
+        {/* Light mode gradient */}
+        <div 
+          className="absolute inset-0 transition-opacity duration-500 dark:opacity-0"
+          style={{
+            background: activeSection === 'data-science' 
+              ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(197, 208, 230, 0.8) 100%)' 
+              : activeSection === 'web-development'
+              ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(187, 229, 198, 0.8) 100%)'
+              : 'linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(176, 167, 196, 0.8) 100%)'
+          }}
+        />
+        
+        {/* Dark mode gradient - much darker */}
+        <div 
+          className="absolute inset-0 transition-opacity duration-500 opacity-0 dark:opacity-100"
+          style={{
+            background: activeSection === 'data-science' 
+              ? 'linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(30, 58, 138, 0.3) 100%)' 
+              : activeSection === 'web-development'
+              ? 'linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(21, 128, 61, 0.3) 100%)'
+              : 'linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(88, 28, 135, 0.3) 100%)',
+            zIndex: 1
+          }}
+        />
+      </div>
       
       {/* Profile Section - Centered and Fixed */}
       <section
@@ -159,7 +178,7 @@ export default function Home() {
           <div id="profile-image" className="transition-all duration-700">
             <div className="relative mx-auto mb-8 w-[200px] h-[200px]">
               {/* Enhanced background glow with subtle gradient */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 rounded-full blur-md opacity-40 scale-110 animate-pulse"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900 dark:to-purple-900 rounded-full blur-md opacity-40 dark:opacity-20 scale-110 animate-pulse"></div>
               
               {/* Container to maintain circular shape */}
               <div className="w-full h-full rounded-full overflow-hidden relative border-4 border-white shadow-lg">
@@ -180,19 +199,20 @@ export default function Home() {
           
           <h1 
             id="profile-name" 
-            className="text-4xl md:text-6xl font-bold mb-3 transition-all duration-700 text-gray-800"
+            className="text-4xl md:text-6xl font-bold mb-3 transition-all duration-700 text-gray-800 dark:text-white"
           >
             Chesthareah Tan
           </h1>
           
-          <div id="profile-subtitle" className="transition-all duration-700 text-gray-700">
+          <div id="profile-subtitle" className="transition-all duration-700 text-gray-700 dark:text-gray-300">
             {/* <h2 className="text-xl md:text-2xl  mb-4">Data Science and Graphic Design</h2> */}
             
             {/* Skill badges */}
             <div className="flex justify-center gap-3 mb-8">
               {/* <span className="px-4 py-1 bg-green-50 text-green-600 rounded-full text-sm font-medium border border-green-100">Python</span> */}
-              <span className="px-4 py-1 bg-blue-50 text-blue-600 rounded-full text-sm font-medium border border-blue-100">Data Science</span>
-              <span className="px-4 py-1 bg-purple-50 text-purple-600 rounded-full text-sm font-medium border border-purple-100">Graphic Design</span>
+              <span className="px-4 py-1 bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300 rounded-full text-sm font-medium border border-blue-100 dark:border-blue-800">Data Science</span>
+              <span className="px-4 py-1 bg-green-50 dark:bg-green-900 text-green-600 dark:text-green-300 rounded-full text-sm font-medium border border-green-100 dark:border-green-800">Web Development</span>
+              <span className="px-4 py-1 bg-purple-50 dark:bg-purple-900 text-purple-600 dark:text-purple-300 rounded-full text-sm font-medium border border-purple-100 dark:border-purple-800">Graphic Design</span>
             </div>
           </div>
           
@@ -227,47 +247,57 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Spacer to push content below fixed profile - with explicit white background */}
-      <div className="h-screen bg-white"></div>
+      {/* Spacer to push content below fixed profile - with explicit background */}
+      <div className="h-screen bg-white dark:bg-black"></div>
 
-      {/* About Me Section with explicit white background */}
+      {/* About Me Section with responsive background */}
 
       <section
         id="about-me"
         ref={aboutRef}
-        className="py-20 bg-white transition-all duration-1000 opacity-0 will-change-transform relative"
+        className="py-20 bg-white dark:bg-gray-950 transition-all duration-1000 opacity-0 will-change-transform relative"
         style={{ zIndex: 10 }}
       >
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto mb-16">
             <h2 className="text-3xl md:text-5xl font-bold mb-8">
-              About <span className={`${activeSection === 'data-science' ? 'text-blue-600' : 'text-purple-600'}`}>Me</span>
+              About <span className={`${activeSection === 'data-science' ? 'text-blue-600' : activeSection === 'web-development' ? 'text-green-600' : 'text-purple-600'}`}>Me</span>
             </h2>
-            <p className="text-lg md:text-xl text-gray-600 mb-8">
-              I&apos;m passionate about solving problems through data and design, blending analytical rigor with creative flair. With expertise in both data science and graphic design, I bring a unique perspective to every project I tackle.
+            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8">
+              I&apos;m passionate about solving problems through data, code, and design, blending analytical rigor with creative flair. With expertise in data science, web development, and graphic design, I bring a unique perspective to every project I tackle.
             </p>
             
             {/* Removed the toggle buttons that were here */}
           </div>
           
           {/* Toggle Navigation */}
-          <nav className="flex justify-center gap-6 mb-8" aria-label="Main navigation">
+          <nav className="flex justify-center gap-4 mb-8" aria-label="Main navigation">
             <button
               onClick={() => toggleSection('data-science')}
               className={`font-semibold text-lg px-4 py-2 rounded-full transition-all ${
                 activeSection === 'data-science' 
                   ? 'bg-blue-600 text-white shadow-md' 
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  : 'bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700'
               }`}
             >
               Data Science
+            </button>
+            <button
+              onClick={() => toggleSection('web-development')}
+              className={`font-semibold text-lg px-4 py-2 rounded-full transition-all ${
+                activeSection === 'web-development' 
+                  ? 'bg-green-600 text-white shadow-md' 
+                  : 'bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700'
+              }`}
+            >
+              Web Development
             </button>
             <button
               onClick={() => toggleSection('graphic-design')}
               className={`font-semibold text-lg px-4 py-2 rounded-full transition-all ${
                 activeSection === 'graphic-design' 
                   ? 'bg-purple-600 text-white shadow-md' 
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  : 'bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700'
               }`}
             >
               Graphic Design
@@ -280,56 +310,83 @@ export default function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {activeSection === 'data-science' ? (
                 <>
-                  <div className="bg-white p-6 rounded-xl shadow-md">
-                    <h3 className="font-bold text-lg text-blue-600 mb-3">Web Development:</h3>
-                    <p className="text-gray-700">Django, HTML, CSS, JavaScript</p>
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 className="font-bold text-lg text-blue-600 dark:text-blue-400 mb-3">Web Development:</h3>
+                    <p className="text-gray-700 dark:text-gray-300">Django, HTML, CSS, JavaScript</p>
                   </div>
-                  <div className="bg-white p-6 rounded-xl shadow-md">
-                    <h3 className="font-bold text-lg text-blue-600 mb-3">Data Visualization:</h3>
-                    <p className="text-gray-700">Matplotlib, Seaborn</p>
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 className="font-bold text-lg text-blue-600 dark:text-blue-400 mb-3">Data Visualization:</h3>
+                    <p className="text-gray-700 dark:text-gray-300">Matplotlib, Seaborn</p>
                   </div>
-                  <div className="bg-white p-6 rounded-xl shadow-md">
-                    <h3 className="font-bold text-lg text-blue-600 mb-3">Programming Languages:</h3>
-                    <p className="text-gray-700">Python, SQL, JS</p>
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 className="font-bold text-lg text-blue-600 dark:text-blue-400 mb-3">Programming Languages:</h3>
+                    <p className="text-gray-700 dark:text-gray-300">Python, SQL, JS</p>
                   </div>
-                  <div className="bg-white p-6 rounded-xl shadow-md">
-                    <h3 className="font-bold text-lg text-blue-600 mb-3">Machine Learning:</h3>
-                    <p className="text-gray-700">Scikit-learn, TensorFlow</p>
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 className="font-bold text-lg text-blue-600 dark:text-blue-400 mb-3">Machine Learning:</h3>
+                    <p className="text-gray-700 dark:text-gray-300">Scikit-learn, TensorFlow</p>
                   </div>
-                  <div className="bg-white p-6 rounded-xl shadow-md">
-                    <h3 className="font-bold text-lg text-blue-600 mb-3">Databases:</h3>
-                    <p className="text-gray-700">MySQL, PostgreSQL</p>
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 className="font-bold text-lg text-blue-600 dark:text-blue-400 mb-3">Databases:</h3>
+                    <p className="text-gray-700 dark:text-gray-300">MySQL, PostgreSQL</p>
                   </div>
-                  <div className="bg-white p-6 rounded-xl shadow-md">
-                    <h3 className="font-bold text-lg text-blue-600 mb-3">Deep Learning:</h3>
-                    <p className="text-gray-700">TensorFlow, Keras</p>
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 className="font-bold text-lg text-blue-600 dark:text-blue-400 mb-3">Deep Learning:</h3>
+                    <p className="text-gray-700 dark:text-gray-300">TensorFlow, Keras</p>
+                  </div>
+                </>
+              ) : activeSection === 'web-development' ? (
+                <>
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 className="font-bold text-lg text-green-600 dark:text-green-400 mb-3">Frontend Development:</h3>
+                    <p className="text-gray-700 dark:text-gray-300">React, Next.js, HTML, CSS, JavaScript</p>
+                  </div>
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 className="font-bold text-lg text-green-600 dark:text-green-400 mb-3">Backend Development:</h3>
+                    <p className="text-gray-700 dark:text-gray-300">Node.js, Express, Django, Flask</p>
+                  </div>
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 className="font-bold text-lg text-green-600 dark:text-green-400 mb-3">Database Management:</h3>
+                    <p className="text-gray-700 dark:text-gray-300">MongoDB, PostgreSQL, MySQL</p>
+                  </div>
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 className="font-bold text-lg text-green-600 dark:text-green-400 mb-3">Styling & UI:</h3>
+                    <p className="text-gray-700 dark:text-gray-300">Tailwind CSS, SCSS, Bootstrap</p>
+                  </div>
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 className="font-bold text-lg text-green-600 dark:text-green-400 mb-3">Development Tools:</h3>
+                    <p className="text-gray-700 dark:text-gray-300">Git, Docker, Webpack, Vite</p>
+                  </div>
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 className="font-bold text-lg text-green-600 dark:text-green-400 mb-3">Cloud & Deployment:</h3>
+                    <p className="text-gray-700 dark:text-gray-300">AWS, Vercel, Netlify, Heroku</p>
                   </div>
                 </>
               ) : (
                 <>
-                  <div className="bg-white p-6 rounded-xl shadow-md">
-                    <h3 className="font-bold text-lg text-purple-600 mb-3">Design Tools:</h3>
-                    <p className="text-gray-700">Figma, Adobe XD, Photoshop</p>
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 className="font-bold text-lg text-purple-600 dark:text-purple-400 mb-3">Design Software:</h3>
+                    <p className="text-gray-700 dark:text-gray-300">Adobe Creative Suite, Figma, Sketch</p>
                   </div>
-                  <div className="bg-white p-6 rounded-xl shadow-md">
-                    <h3 className="font-bold text-lg text-purple-600 mb-3">UI/UX Design:</h3>
-                    <p className="text-gray-700">Wireframing, Prototyping, User Testing</p>
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 className="font-bold text-lg text-purple-600 dark:text-purple-400 mb-3">Brand Identity:</h3>
+                    <p className="text-gray-700 dark:text-gray-300">Logo Design, Brand Guidelines, Typography</p>
                   </div>
-                  <div className="bg-white p-6 rounded-xl shadow-md">
-                    <h3 className="font-bold text-lg text-purple-600 mb-3">Illustration:</h3>
-                    <p className="text-gray-700">Vector Art, Icon Design</p>
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 className="font-bold text-lg text-purple-600 dark:text-purple-400 mb-3">Digital Design:</h3>
+                    <p className="text-gray-700 dark:text-gray-300">UI/UX Design, Web Graphics, Social Media</p>
                   </div>
-                  <div className="bg-white p-6 rounded-xl shadow-md">
-                    <h3 className="font-bold text-lg text-purple-600 mb-3">Typography:</h3>
-                    <p className="text-gray-700">Font Pairing, Hierarchy, Readability</p>
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 className="font-bold text-lg text-purple-600 dark:text-purple-400 mb-3">Print Design:</h3>
+                    <p className="text-gray-700 dark:text-gray-300">Brochures, Posters, Business Cards</p>
                   </div>
-                  <div className="bg-white p-6 rounded-xl shadow-md">
-                    <h3 className="font-bold text-lg text-purple-600 mb-3">Brand Identity:</h3>
-                    <p className="text-gray-700">Logo Design, Brand Guidelines</p>
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 className="font-bold text-lg text-purple-600 dark:text-purple-400 mb-3">Illustration:</h3>
+                    <p className="text-gray-700 dark:text-gray-300">Vector Art, Digital Illustration, Icons</p>
                   </div>
-                  <div className="bg-white p-6 rounded-xl shadow-md">
-                    <h3 className="font-bold text-lg text-purple-600 mb-3">Print Design:</h3>
-                    <p className="text-gray-700">Marketing Materials, Packaging</p>
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 className="font-bold text-lg text-purple-600 dark:text-purple-400 mb-3">Photography:</h3>
+                    <p className="text-gray-700 dark:text-gray-300">Photo Editing, Retouching, Color Grading</p>
                   </div>
                 </>
               )}
@@ -339,14 +396,16 @@ export default function Home() {
           {/* Call to action */}
           <div className="text-center mt-16">
             <Link 
-              href={activeSection === 'data-science' ? '/datascience' : '/graphicdesign'} 
+              href={activeSection === 'data-science' ? '/datascience' : activeSection === 'web-development' ? '/webdevelopment' : '/graphicdesign'} 
               className={`inline-flex items-center px-6 py-3 rounded-lg text-white transition-all transform hover:-translate-y-1 shadow-lg hover:shadow-xl ${
                 activeSection === 'data-science' 
                   ? 'bg-gradient-to-r from-blue-600 to-blue-500' 
+                  : activeSection === 'web-development'
+                  ? 'bg-gradient-to-r from-green-600 to-green-500'
                   : 'bg-gradient-to-r from-purple-600 to-purple-500'
               }`}
             >
-              <span>View My {activeSection === 'data-science' ? 'Data Science' : 'Design'} Portfolio</span>
+              <span>View My {activeSection === 'data-science' ? 'Data Science' : activeSection === 'web-development' ? 'Web Development' : 'Design'} Portfolio</span>
               <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
               </svg>
@@ -356,17 +415,17 @@ export default function Home() {
       </section>
       
       {/* Projects Section with explicit white background */}
-      <section className="py-20 bg-gray-50 relative" style={{ zIndex: 10 }}>
+      <section className="py-20 bg-gray-50 dark:bg-gray-900 relative" style={{ zIndex: 10 }}>
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-            Featured <span className={`${activeSection === 'data-science' ? 'text-blue-600' : 'text-purple-600'}`}>Projects</span>
+            Featured <span className={`${activeSection === 'data-science' ? 'text-blue-600' : activeSection === 'web-development' ? 'text-green-600' : 'text-purple-600'}`}>Projects</span>
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {activeSection === 'data-science' ? (
               <>
                 {/* Data Science Project Cards */}
-                <div className="bg-white rounded-xl shadow-md overflow-hidden transform transition-all hover:shadow-lg hover:-translate-y-1">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-xl overflow-hidden transform transition-all hover:shadow-lg dark:hover:shadow-2xl hover:-translate-y-1">
                   <div className="h-48 bg-blue-600 flex items-center justify-center relative">
                     <Image 
                       src="/projectimg/face_reg.png" 
@@ -377,19 +436,19 @@ export default function Home() {
                   </div>
                   <div className="p-6">
                     <h3 className="text-xl font-bold mb-2">Face Recognition Project</h3>
-                    <p className="text-gray-600 mb-4">
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
                     A real-time face recognition system that enhances security by replacing passwords with machine learning and deep learning-based facial authentication.
                     </p>
                     <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">Python</span>
-                      <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">Django</span>
-                      <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">LBPH</span>
+                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">Python</span>
+                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">Django</span>
+                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">LBPH</span>
                     </div>
-                    <Link href="/datascience/project1" className="text-blue-600 font-medium hover:underline">View Project →</Link>
+                    <Link href="/datascience/project1" className="text-blue-600 dark:text-blue-400 font-medium hover:underline">View Project →</Link>
                   </div>
                 </div>
                 
-                <div className="bg-white rounded-xl shadow-md overflow-hidden transform transition-all hover:shadow-lg hover:-translate-y-1">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-xl overflow-hidden transform transition-all hover:shadow-lg dark:hover:shadow-2xl hover:-translate-y-1">
                   <div className="h-48 bg-blue-500 flex items-center justify-center relative">
                     <Image 
                       src="/projectimg/loan.avif" 
@@ -400,41 +459,85 @@ export default function Home() {
                   </div>
                   <div className="p-6">
                     <h3 className="text-xl font-bold mb-2">Loan Recommendation System</h3>
-                    <p className="text-gray-600 mb-4">
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
                       This project uses data to predict a user&apos;s loan eligibility and assess their risk level based on personal and historical financial information.
                     </p>
                     <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">Random Forest</span>
-                      <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">Python</span>
-                      <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">Django</span>
+                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">Random Forest</span>
+                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">Python</span>
+                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">MySQL</span>
                     </div>
-                    <Link href="/datascience/project2" className="text-blue-600 font-medium hover:underline">View Project →</Link>
+                    <Link href="/datascience/project2" className="text-blue-600 dark:text-blue-400 font-medium hover:underline">View Project →</Link>
+                  </div>
+                </div>
+              </>
+            ) : activeSection === 'web-development' ? (
+              <>
+                {/* Web Development Project Cards */}
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-xl overflow-hidden transform transition-all hover:shadow-lg dark:hover:shadow-2xl hover:-translate-y-1">
+                  <div className="h-48 bg-green-600 flex items-center justify-center">
+                    <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                    </svg>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold mb-2">E-commerce Platform</h3>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      Full-stack e-commerce solution with payment integration and admin dashboard.
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium rounded">Next.js</span>
+                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium rounded">TypeScript</span>
+                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium rounded">Stripe</span>
+                    </div>
+                    <Link href="/webdevelopment/project1" className="text-green-600 dark:text-green-400 font-medium hover:underline">View Project →</Link>
+                  </div>
+                </div>
+                
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-xl overflow-hidden transform transition-all hover:shadow-lg dark:hover:shadow-2xl hover:-translate-y-1">
+                  <div className="h-48 bg-green-500 flex items-center justify-center">
+                    <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                    </svg>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold mb-2">Portfolio Website</h3>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      Modern portfolio website with animations and responsive design.
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium rounded">React</span>
+                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium rounded">Tailwind</span>
+                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium rounded">Framer Motion</span>
+                    </div>
+                    <Link href="/webdevelopment/project2" className="text-green-600 dark:text-green-400 font-medium hover:underline">View Project →</Link>
                   </div>
                 </div>
               </>
             ) : (
               <>
                 {/* Graphic Design Project Cards */}
-                <div className="bg-white rounded-xl shadow-md overflow-hidden transform transition-all hover:shadow-lg hover:-translate-y-1">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-xl overflow-hidden transform transition-all hover:shadow-lg dark:hover:shadow-2xl hover:-translate-y-1">
                   <div className="h-48 bg-purple-600 flex items-center justify-center">
                     <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
                     </svg>
                   </div>
                   <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2">Brand Identity System</h3>
-                    <p className="text-gray-600 mb-4">
-                      Complete brand identity design for a tech startup including logo, colors, and typography.
+                    <h3 className="text-xl font-bold mb-2">Brand Identity Design</h3>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      Complete brand identity package including logo, color palette, and brand guidelines.
                     </p>
                     <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="px-2 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded">Adobe Illustrator</span>
-                      <span className="px-2 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded">Branding</span>
+                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs font-medium rounded">Adobe Illustrator</span>
+                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs font-medium rounded">Branding</span>
+                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs font-medium rounded">Logo Design</span>
                     </div>
-                    <Link href="/graphicdesign/project1" className="text-purple-600 font-medium hover:underline">View Project →</Link>
+                    <Link href="/graphicdesign/project1" className="text-purple-600 dark:text-purple-400 font-medium hover:underline">View Project →</Link>
                   </div>
                 </div>
                 
-                <div className="bg-white rounded-xl shadow-md overflow-hidden transform transition-all hover:shadow-lg hover:-translate-y-1">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-xl overflow-hidden transform transition-all hover:shadow-lg dark:hover:shadow-2xl hover:-translate-y-1">
                   <div className="h-48 bg-purple-500 flex items-center justify-center">
                     <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
@@ -442,15 +545,15 @@ export default function Home() {
                   </div>
                   <div className="p-6">
                     <h3 className="text-xl font-bold mb-2">Website UI Redesign</h3>
-                    <p className="text-gray-600 mb-4">
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
                       Modernized UI design for an e-commerce platform, boosting conversion rates by 28%.
                     </p>
                     <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="px-2 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded">Figma</span>
-                      <span className="px-2 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded">UI/UX</span>
-                      <span className="px-2 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded">Prototyping</span>
+                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs font-medium rounded">Figma</span>
+                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs font-medium rounded">UI/UX</span>
+                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs font-medium rounded">Prototyping</span>
                     </div>
-                    <Link href="/graphicdesign/project2" className="text-purple-600 font-medium hover:underline">View Project →</Link>
+                    <Link href="/graphicdesign/project2" className="text-purple-600 dark:text-purple-400 font-medium hover:underline">View Project →</Link>
                   </div>
                 </div>
               </>
