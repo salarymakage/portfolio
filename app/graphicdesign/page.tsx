@@ -315,21 +315,16 @@ export default function GraphicDesignPage() {
               
               {/* Profile Image - positioned in front of the circular tools */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative w-[250px] h-[250px] mx-auto mb-8">
-                  {/* Background glow */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-200 to-purple-400 dark:from-purple-900 dark:to-purple-700 rounded-full blur-md opacity-40 dark:opacity-20 scale-110 animate-pulse"></div>
-                  <div className="w-full h-full rounded-full overflow-hidden relative border-4 border-white shadow-lg">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <Image
-                        src="/profile.png"
-                        alt="Graphic Designer"
-                        width={250}
-                        height={250}
-                        className="object-cover w-full h-full"
-                        priority
-                      />
-                    </div>
-                  </div>
+                <div className="z-10 w-60 h-60 rounded-full overflow-hidden border-4 border-white shadow-xl flex items-center justify-center">
+                  <Image
+                    src="/profile.png"
+                    alt="Tan Chesthareah"
+                    width={240}
+                    height={240}
+                    className="object-cover w-full h-full"
+                    priority
+                    style={{ objectPosition: 'center top' }}
+                  />
                 </div>
               </div>
             </div>
@@ -340,7 +335,7 @@ export default function GraphicDesignPage() {
             <h1 className="text-3xl md:text-5xl font-bold mb-4 text-purple-600 dark:text-purple-400">Graphic Designer</h1>
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-6">Creating Visual Stories</p>
             <div className="max-w-3xl">
-              <p className="text-lg mb-6 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg p-4">
+              <p className="text-lg mb-6">
                 I transform ideas into compelling visual narratives that captivate audiences and strengthen brand identities. With a keen eye for aesthetics and user experience, I create designs that not only look beautiful but also effectively communicate your message.
               </p>
               <div className="flex gap-4 mb-6">
@@ -355,12 +350,12 @@ export default function GraphicDesignPage() {
                   icon={<svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M6.938 4.503c.702 0 1.34.06 1.92.188.577.13 1.07.33 1.485.61.41.28.733.65.96 1.12.225.47.34 1.05.34 1.73 0 .74-.17 1.36-.507 1.86-.338.5-.837.9-1.502 1.22.906.26 1.576.72 2.022 1.37.448.66.665 1.45.665 2.36 0 .75-.13 1.39-.41 1.93-.28.55-.67 1-1.16 1.35-.5.348-1.08.6-1.76.767-.68.165-1.41.254-2.2.254H0V4.51h6.938v-.007zM16.94 16.665c.44.428 1.073.643 1.894.643.59 0 1.1-.148 1.53-.447.428-.29.7-.61.826-.94h2.713c-.435 1.348-1.1 2.31-1.997 2.884-.9.576-1.983.866-3.254.866-.877 0-1.67-.137-2.384-.413-.72-.275-1.326-.672-1.84-1.19-.507-.518-.895-1.143-1.17-1.868-.273-.727-.41-1.53-.41-2.4 0-.84.14-1.632.425-2.367.285-.735.677-1.37 1.18-1.91.507-.54 1.106-.962 1.805-1.267.698-.305 1.46-.458 2.285-.458.873 0 1.643.17 2.31.506.665.338 1.216.79 1.655 1.358.44.568.75 1.22.93 1.96.18.74.217 1.52.118 2.362h-8.12c0 .823.233 1.492.69 2.016zm-8.97-10.23c-.31-.282-.717-.423-1.22-.423-.332 0-.64.066-.948.197-.31.132-.562.327-.767.583-.21.256-.36.58-.46.96-.1.39-.148.83-.148 1.33h4.537c-.068-.804-.292-1.39-.672-1.747-.38-.36-.84-.537-1.368-.537-.307 0-.607.094-.902.283zm10.24 3.312c-.33-.374-.79-.557-1.37-.557-.344 0-.646.066-.903.197-.26.132-.48.31-.61.528-.13.22-.261.45-.334.707-.07.258-.115.503-.115.74h4.06c-.067-.693-.248-1.24-.727-1.614zm-2.87 9.754v-3.746H0v3.746h6.34z"/></svg>}
                 />
               </div>
-              <Link 
+              {/* <Link 
                 href="/contact"
                 className="inline-block px-8 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
               >
                 Hire Me for Design Projects
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
