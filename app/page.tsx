@@ -3,6 +3,8 @@
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import PinnedProjects from './components/PinnedProjects';
+// import { datascience, web, graphicdesign } from './data/projects';
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
@@ -415,152 +417,7 @@ export default function Home() {
       </section>
       
       {/* Projects Section with explicit white background */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-900 relative" style={{ zIndex: 10 }}>
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-            Pinned <span className={`${activeSection === 'data-science' ? 'text-blue-600' : activeSection === 'web-development' ? 'text-green-600' : 'text-purple-600'}`}>Projects</span>
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {activeSection === 'data-science' ? (
-              <>
-                {/* Data Science Project Cards */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-xl overflow-hidden transform transition-all hover:shadow-lg dark:hover:shadow-2xl hover:-translate-y-1">
-                  <div className="h-48 bg-blue-600 flex items-center justify-center relative">
-                    <Image 
-                      src="/projectimg/face_reg.png" 
-                      alt="Face Recognition Project" 
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2">Face Recognition Project</h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    A real-time face recognition system that enhances security by replacing passwords with machine learning and deep learning-based facial authentication.
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">Python</span>
-                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">Django</span>
-                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">LBPH</span>
-                    </div>
-                    <Link href="/datascience/facerecognition" className="text-blue-600 dark:text-blue-400 font-medium hover:underline">View Project →</Link>
-                  </div>
-                </div>
-                
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-xl overflow-hidden transform transition-all hover:shadow-lg dark:hover:shadow-2xl hover:-translate-y-1">
-                  <div className="h-48 bg-blue-500 flex items-center justify-center relative">
-                    <Image 
-                      src="/projectimg/loan.avif" 
-                      alt="Loan Recommendation System" 
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2">Loan Recommendation System</h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      This project uses data to predict a user&apos;s loan eligibility and assess their risk level based on personal and historical financial information.
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">Random Forest</span>
-                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">Python</span>
-                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">MySQL</span>
-                    </div>
-                    <Link href="/datascience/loanprediction" className="text-blue-600 dark:text-blue-400 font-medium hover:underline">View Project →</Link>
-                  </div>
-                </div>
-              </>
-            ) : activeSection === 'web-development' ? (
-              <>
-                {/* Web Development Project Cards */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-xl overflow-hidden transform transition-all hover:shadow-lg dark:hover:shadow-2xl hover:-translate-y-1">
-                  <div className="h-48 bg-green-600 flex items-center justify-center">
-                    <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
-                    </svg>
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2">E-commerce Platform</h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Full-stack e-commerce solution with payment integration and admin dashboard.
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium rounded">Next.js</span>
-                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium rounded">TypeScript</span>
-                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium rounded">Stripe</span>
-                    </div>
-                    <Link href="/webdevelopment/project1" className="text-green-600 dark:text-green-400 font-medium hover:underline">View Project →</Link>
-                  </div>
-                </div>
-                
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-xl overflow-hidden transform transition-all hover:shadow-lg dark:hover:shadow-2xl hover:-translate-y-1">
-                  <div className="h-48 bg-green-500 flex items-center justify-center">
-                    <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                    </svg>
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2">Portfolio Website</h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Modern portfolio website with animations and responsive design.
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium rounded">React</span>
-                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium rounded">Tailwind</span>
-                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium rounded">Framer Motion</span>
-                    </div>
-                    <Link href="/webdevelopment/project2" className="text-green-600 dark:text-green-400 font-medium hover:underline">View Project →</Link>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <>
-                {/* Graphic Design Project Cards */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-xl overflow-hidden transform transition-all hover:shadow-lg dark:hover:shadow-2xl hover:-translate-y-1">
-                  <div className="h-48 bg-purple-600 flex items-center justify-center">
-                    <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
-                    </svg>
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2">Brand Identity Design</h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Complete brand identity package including logo, color palette, and brand guidelines.
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs font-medium rounded">Adobe Illustrator</span>
-                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs font-medium rounded">Branding</span>
-                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs font-medium rounded">Logo Design</span>
-                    </div>
-                    <Link href="/graphicdesign/project1" className="text-purple-600 dark:text-purple-400 font-medium hover:underline">View Project →</Link>
-                  </div>
-                </div>
-                
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-xl overflow-hidden transform transition-all hover:shadow-lg dark:hover:shadow-2xl hover:-translate-y-1">
-                  <div className="h-48 bg-purple-500 flex items-center justify-center">
-                    <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                    </svg>
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2">Website UI Redesign</h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Modernized UI design for an e-commerce platform, boosting conversion rates by 28%.
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs font-medium rounded">Figma</span>
-                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs font-medium rounded">UI/UX</span>
-                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs font-medium rounded">Prototyping</span>
-                    </div>
-                    <Link href="/graphicdesign/project2" className="text-purple-600 dark:text-purple-400 font-medium hover:underline">View Project →</Link>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      </section>
+      <PinnedProjects activeSection={activeSection} />
     </main>
   );
 }
