@@ -48,7 +48,7 @@ export default function Navbar() {
       return newState;
     });
   }, []);
-
+  
   // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -84,17 +84,17 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => (
-              <Link 
+            <Link 
                 key={item.href}
                 href={item.href}
-                className={`font-medium transition-colors ${
+              className={`font-medium transition-colors ${
                   pathname === item.href 
                     ? `text-${item.color}-600 dark:text-${item.color}-400` 
                     : `text-gray-600 hover:text-${item.color}-600 dark:text-gray-300 dark:hover:text-${item.color}-400`
-                }`}
-              >
+              }`}
+            >
                 {item.label}
-              </Link>
+            </Link>
             ))}
             <Link 
               href="/contact"
@@ -153,15 +153,15 @@ export default function Navbar() {
               {item.label}
             </Link>
           ))}
-          <Link 
-            href="/contact"
-            className="block px-3 py-2 rounded-md text-base font-medium bg-gradient-to-r from-blue-500 to-purple-500 text-white"
+            <Link 
+              href="/contact"
+              className="block px-3 py-2 rounded-md text-base font-medium bg-gradient-to-r from-blue-500 to-purple-500 text-white"
             onClick={() => toggleMobileMenu()}
-          >
-            Contact
-          </Link>
+            >
+              Contact
+            </Link>
+          </div>
         </div>
-      </div>
     </nav>
   );
 }

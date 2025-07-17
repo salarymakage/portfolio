@@ -23,7 +23,7 @@ export default function RootLayout({
           </main>
           <footer className="py-6 text-center text-gray-500 dark:text-gray-400 text-sm bg-white dark:bg-gray-950">
             <div className="container mx-auto">
-              <p>© {new Date().getFullYear()} John Doe. All rights reserved.</p>
+              <p>© {new Date().getFullYear()} Chestharas Tan All rights reserved.</p>
             </div>
           </footer>
         </ThemeProvider>

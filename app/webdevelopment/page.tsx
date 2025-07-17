@@ -431,7 +431,7 @@ export default function WebDevelopmentPage() {
           </div>
         </div>
         
-        {/* Call to Action */}
+        {/* Call to Action
         <div className="text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-green-600 dark:text-green-400">
             Ready to Build Something Amazing?
@@ -449,7 +449,7 @@ export default function WebDevelopmentPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );

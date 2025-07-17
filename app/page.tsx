@@ -310,17 +310,17 @@ export default function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {activeSection === 'data-science' ? (
                 <>
-                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                  {/* <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
                     <h3 className="font-bold text-lg text-blue-600 dark:text-blue-400 mb-3">Web Development:</h3>
                     <p className="text-gray-700 dark:text-gray-300">Django, HTML, CSS, JavaScript</p>
-                  </div>
+                  </div> */}
                   <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
                     <h3 className="font-bold text-lg text-blue-600 dark:text-blue-400 mb-3">Data Visualization:</h3>
                     <p className="text-gray-700 dark:text-gray-300">Matplotlib, Seaborn</p>
                   </div>
                   <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
                     <h3 className="font-bold text-lg text-blue-600 dark:text-blue-400 mb-3">Programming Languages:</h3>
-                    <p className="text-gray-700 dark:text-gray-300">Python, SQL, JS</p>
+                    <p className="text-gray-700 dark:text-gray-300">Python, SQL</p>
                   </div>
                   <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
                     <h3 className="font-bold text-lg text-blue-600 dark:text-blue-400 mb-3">Machine Learning:</h3>
@@ -418,7 +418,7 @@ export default function Home() {
       <section className="py-20 bg-gray-50 dark:bg-gray-900 relative" style={{ zIndex: 10 }}>
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-            Featured <span className={`${activeSection === 'data-science' ? 'text-blue-600' : activeSection === 'web-development' ? 'text-green-600' : 'text-purple-600'}`}>Projects</span>
+            Pinned <span className={`${activeSection === 'data-science' ? 'text-blue-600' : activeSection === 'web-development' ? 'text-green-600' : 'text-purple-600'}`}>Projects</span>
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -444,7 +444,7 @@ export default function Home() {
                       <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">Django</span>
                       <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">LBPH</span>
                     </div>
-                    <Link href="/datascience/project1" className="text-blue-600 dark:text-blue-400 font-medium hover:underline">View Project →</Link>
+                    <Link href="/datascience/facerecognition" className="text-blue-600 dark:text-blue-400 font-medium hover:underline">View Project →</Link>
                   </div>
                 </div>
                 
@@ -467,7 +467,7 @@ export default function Home() {
                       <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">Python</span>
                       <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">MySQL</span>
                     </div>
-                    <Link href="/datascience/project2" className="text-blue-600 dark:text-blue-400 font-medium hover:underline">View Project →</Link>
+                    <Link href="/datascience/loanprediction" className="text-blue-600 dark:text-blue-400 font-medium hover:underline">View Project →</Link>
                   </div>
                 </div>
               </>
